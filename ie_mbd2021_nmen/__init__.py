@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Jul 29 11:30:59 2021
+Updated on Tue Sep 7 17:21
 
 @author: Nalisha_M
 This document includes two class, "CustomDF" and SegmentTree
@@ -52,8 +53,15 @@ class CustomDF():
         if ignore_target:
             columns = filter(lambda x: x not in to_ignore, list(columns))
         return list(columns)
-        
     
+    def SetAttributes(self,argument_dict):
+        for key,value in argument_dict.items():
+            self.data[key]=self.data[key].astype(value)
+        
+#-----------------------------------------------------------------------------
+                        # DATA HANDLING
+#-----------------------------------------------------------------------------
+   
     def check_duplicated(self):
         """
         Detect for duplicated rows.
@@ -242,19 +250,19 @@ class CustomDF():
             return split
     
     
-    def find_corr(self,numeric_variables,target,threshold=0.75):
+    def find_corr(self,threshold=0.75):
         import seaborn as sns 
         '''
         To find correlated numeric variables
         Return a heatmap and printed message if any.
         '''
+        numeric_variables=self.get_columns_bydtype(["float64", "int64"], ignore_target = False)
         cormat = self.data[numeric_variables].corr()
         round(cormat,2)
         corva=cormat[cormat.abs()>threshold].sum()!=1
-        sns.heatmap(cormat)
-        if len(corva)!=0:
-            print("There are "+ str(len(list(corva[corva==True].keys())))+ " numeric variables are positively/negatively correlated with coefficient.abs() >0.75.")
-            print("The variables are: "+ str(list(corva[corva==True].keys())))
+        if sum(corva)>0:
+            print("At threshold of "+str(threshold)+",these variables are identified: "+ str(list(corva[corva==True].keys())))
+            sns.heatmap(cormat)
             return list(corva[corva==True].keys())
         else:
             print("There is no correlated numeric variables.")
@@ -293,4 +301,48 @@ class CustomDF():
             for col in non_binary:
                 self.data[col] = LabelEncoder().fit_transform(self.data[col])
             print("Non_binary ones: "+ str(non_binary)+" are encoded.")
-     
+
+#-----------------------------------------------------------------------------
+                        # RISK BASED APPROACH
+#----------------------------------------------------------------------------- 
+    def missing_not_at_random(self,input_vars,target,threshold):
+        if len(input_vars)==0:
+            input_vars=list(self.data.columns)
+            
+        for col in input_vars:
+            self.data[col]=self.data[col].fillna(value='Missing')
+    
+        dfmiss=pd.DataFrame(self.data)
+        missing=list(dfmiss.columns)
+        for col in missing:
+            dfmiss[col]=dfmiss[col].apply(lambda x: 0 if x!='Missing' else 1)
+
+        cormat = dfmiss[input_vars].corr()
+        round(cormat,2)
+        corva=cormat[cormat.abs()>threshold].sum()!=1
+        if len(corva)!=0:
+            variables= list(corva[corva==True].keys())
+        else:
+            variables=[]
+            
+        full_file=self.data.columns.tolist()
+        full_file.remove(target)
+        thin_file=list(set(full_file)-set(variables))
+    
+        if len(variables)>0:
+            print("--"*25)
+            print("\033[1m"+" Missing Not At Random Report  "+'\033[0m')
+            print("--"*25)
+            print("\033[1m"+"> Missing Not At Random Features are: "+'\033[0m'+ ','.join(sorted(variables))+" at threshold "+ str(threshold))
+            print('\n')
+            print("\033[1m"+">> Target is "+'\033[0m'+ str(target)+". Therefore we recommend:")
+            print('\n')
+            print("\033[1m"+">> Thin File Segmentation Variables are: "+'\033[0m',', '.join(sorted(thin_file)))
+            print('\n')
+            print("\033[1m"+">> Full File Segmentation Variables are: "+'\033[0m',', '.join(sorted(full_file)))
+            
+        else:
+            thin_file=[]
+            print("There is no MNAR variables identified. A full file is suggested.")
+            print("\033[1m"+">> Full File Segmentation Variables are: "+'\033[0m',', '.join(sorted(full_file)))
+        return full_file,thin_file
