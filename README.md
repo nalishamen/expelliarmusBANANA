@@ -29,9 +29,9 @@ for risk-involved Customer Segmentation.
 	Applicable to Non-binary variables
 2. to_split(), find_split() Using CHAID decision tree to find statistically significant split (based on full file, thin file or a given list of input variables defined by End User)
 	Applicable to both numeric and non-binary variables
-3. transform the variable into a binary class 1=(>split point), 0=(<split point).
+3. binary_split(): transform the variable into a binary class 1=(>split point), 0=(<split point).
 	Applicable to both numeric and non-binary variables
-4. binary_split(): For each variable in full file, thin file or a given list of input variables,create Segment 1 and Segment 2 according to the binary class.
+4. For each variable in full file, thin file or a given list of input variables,create Segment 1 and Segment 2 according to the binary class.
 5. candidate_split_analysis():Create parameter tuned [lg_gridsearch()] Logistic Regression models for Full Population, Seg1 and Seg2, 
 6. find_segment_split()Create GINI Coefficients and compare the result to identify:
 	- Variable that is BEST Segmentation
