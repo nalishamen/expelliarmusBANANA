@@ -2,24 +2,24 @@
 This python package is BANANA! 
 
 The powerful CustomDF() class has 15+ methods to:
-    1. Load data
-    2. Select a subset of dataset based on a column list
-    3. Check duplicated rows
-    4. Check columns with missing values' percentage
-    5. Check columns with a single value homogenous_col()
-    6. NaN Treatment:
-        Drop rows with NAs for a column list
-        Fill NAs based on a column with a specific value, or by dtype (0 /"UNKNOWN")
-        Drop a specific column or a list of columns
-    7. Create new columns:
-        Calcuate difference between datetimes
-        Numerical calcualtion
-        Extract information from a multi-labeled column
-    8. Group: Redefine several values with a specific value
-    9. Binary: find binary variables, encode binary variables to 0/1
-    10. Correlation: find a list of columns that are correlated with given threshold
-    11. Find Split based on CHAID
-    12. Find a list of columns that are MISSING NOT AT RANDOMM with a given threshold
+1. Load data
+2. Select a subset of dataset based on a column list
+3. Check duplicated rows
+4. Check columns with missing values' percentage
+5. Check columns with a single value homogenous_col()
+NaN Treatment:
+6. Drop rows with NAs for a column list
+7. Fill NAs based on a column with a specific value, or by dtype (0 /"UNKNOWN")
+8. Drop a specific column or a list of columns
+Create new columns:
+9. Calcuate difference between datetimes
+10. Numerical calcualtion
+11. Extract information from a multi-labeled column
+12. Group: Redefine several values with a specific value
+13. Binary: find binary variables, encode binary variables to 0/1
+14. Correlation: find a list of columns that are correlated with given threshold
+15. Find Split based on CHAID
+16. Find a list of columns that are MISSING NOT AT RANDOMM with a given threshold
 
 RiskDataframe() is specifically created to build an objective segmentation using CHAID 
 for risk-involved Customer Segmentation.
