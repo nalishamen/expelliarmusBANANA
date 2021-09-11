@@ -1,11 +1,11 @@
 from setuptools import setup
 
-setup(name='ie_mbd2021_nmen',
+setup(name='expelliarmusBANANA',
       version='0.1.1',  # Development release
-      description='Python Package to perform data handling and Risk based approach for a dataset.',
-      url='https://github.com/nalishamen/ie_mbd2021_nmen.git',
+      description='A Python Spell to apply data handling and segmentation magic to a dataframe.',
+      url='https://github.com/nalishamen/expelliarmusBANANA',
       author='Nalisha Men',
       author_email='nalisha.m@student.ie.edu',
       license='MIT',
-          packages=['ie_mbd2021_nmen'],
+          packages=['expelliarmusBANANA'],
       zip_safe=False)
