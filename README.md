@@ -16,17 +16,16 @@ The powerful **CustomDF()** class has 15+ methods to:
 |Automatic Fill NaN based on dtype (0 /"UNKNOWN")|fill_na_bytype()|
 |Manually Fill NaN with a specific value| fill_na(columns,value)|
 |Drop a specific column or a list of columns |drop_columns(columns_list)|
+|To dummy variables|to_dummies()|
 |Encoding Binary variables|encode_binary()|
-
-Others:
-* Calcuate difference between datetimes
-* Numerical calcualtion
-* Extract information from a multi-labeled column
-* Group: Redefine several values with a specific value
-* Binary: find binary variables, encode binary variables to 0/1
-* Correlation: find a list of columns that are correlated with given threshold
-* Find Split based on CHAID
-* Find a list of columns that are MISSING NOT AT RANDOMM with a given threshold
+|Find binary variables in a list|find_binary()|
+|Calcuate difference between datetimes|date_difference(begin,end,form,new_name)|
+|4 numerical calcualtion|calculation(a, b, new_name, method)|
+|Extract regular expression from a multi-labeled column|extractinfo(column,re_expression,new_name)|
+|Group: Redefine several values with a specific value|redefine_group( column, old_values, new_value)|
+|Correlation: find a list of columns that are correlated with given threshold|find_corr(numeric_variables,target,threshold=0.75)|
+|Find Split based on CHAID|find_split()|
+|Find a list of columns that are MISSING NOT AT RANDOMM with a given threshold|missing_not_at_random()|
   
 **RiskDataframe()** is specifically created to build an objective segmentation using CHAID for risk-involved Customer Segmentation.
 
